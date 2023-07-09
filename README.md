@@ -1,2 +1,2 @@
-# threads
-threads graphql api
+# threads bot
+bot threads, cuma project iseng
