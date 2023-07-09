@@ -35,6 +35,9 @@ function request($url, $data = null, $headers = null, $outputheader = null)
     return curl_exec($ch);
 }
 
+$token = file_get_contents('token.txt'); //CHANGE
+
+
 $headers = array();
 $headers[] = 'X-Bloks-Version-Id: 5f56efad68e1edec7801f630b5c122704ec5378adbee6609a448f105f34a9c73';
 $headers[] = 'X-Ig-Www-Claim: hmac.AR2jr3_r-N6PqPM09G7tetqnPfD9P_Ux_HFjJvwyPwksRLqR';
@@ -42,7 +45,7 @@ $headers[] = 'X-Ig-Device-Id: '.$uuid;
 $headers[] = 'X-Ig-Android-Id: android-6be35fa278d92525';
 $headers[] = 'User-Agent: Barcelona 289.0.0.77.109 Android (31/12; 440dpi; 1080x2148; Google/google; sdk_gphone64_arm64; emulator64_arm64; ranchu; en_US; 489720145)';
 $headers[] = 'Accept-Language: en-US';
-$headers[] = 'Authorization: Bearer IGT:2:YOURTOKEN'; //CHANGE THIS or file_get_content token.txt
+$headers[] = 'Authorization: Bearer '.$token; 
 $headers[] = 'Host: i.instagram.com';
 
 
