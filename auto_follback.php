@@ -48,12 +48,11 @@ $headers[] = 'Host: i.instagram.com';
 
 $getNotif = request('https://i.instagram.com/api/v1/text_feed/text_app_notifications/?feed_type=all&mark_as_seen=false&timezone_offset=25200&timezone_name=Asia%2FJakarta', '', $headers, '');
 $parsegetNotif = json_decode($getNotif, TRUE);
-//print_r($parsegetNotif);
-// kirim POST /api/v1/text_feed/text_app_inbox_seen/
-// POST /api/v1/media/xxxxxxx/like/ 
-//echo $parsegetNotif['new_stories']
-//echo $parsegetNotif['old_stories'][0]['args']['profile_id'];
 
+// kirim POST /api/v1/text_feed/text_app_inbox_seen/ optional
+// POST /api/v1/friendships/destroy/xxxx/ unfollow
+//echo $parsegetNotif['new_stories']
+//echo $parsegetNotif['old_stories']
 
 foreach ($parsegetNotif['new_stories'] as $story) {
     $userId = $story['args']['inline_follow']['user_info']['id'];
