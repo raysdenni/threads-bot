@@ -17,7 +17,8 @@ function request($url, $data = null, $headers = null, $outputheader = null)
 {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
     if($data):
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
@@ -55,6 +56,13 @@ $headers[] = 'Host: i.instagram.com';
 
 $getFeeds = request('https://i.instagram.com/api/v1/feed/text_post_app_timeline/', 'feed_view_info=[]&max_id=&pagination_source=text_post_feed_threads&is_pull_to_refresh=0&_uuid='.$uuid.'&bloks_versioning_id=5f56efad68e1edec7801f630b5c122704ec5378adbee6609a448f105f34a9c73', $headers, '');
 $parsegetFeeds = json_decode($getFeeds, TRUE);
+
+if(isset($parsegetFeeds['message']) == "login_required"){
+    echo "Auth expired, please get token again.";
+    exit();
+}
+
+
 
 foreach ($parsegetFeeds['items'] as $postingan) {
     $mediaid = $postingan['thread_items'][0]['post']['id'];

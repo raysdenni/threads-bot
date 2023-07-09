@@ -18,7 +18,8 @@ function request($url, $data = null, $headers = null, $outputheader = null)
 {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
     if($data):
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
@@ -51,6 +52,12 @@ $headers[] = 'Host: i.instagram.com';
 
 $getNotif = request('https://i.instagram.com/api/v1/text_feed/text_app_notifications/?feed_type=all&mark_as_seen=false&timezone_offset=25200&timezone_name=Asia%2FJakarta', '', $headers, '');
 $parsegetNotif = json_decode($getNotif, TRUE);
+
+if(isset($parsegetNotif['message']) == "login_required"){
+    echo "Auth expired, please get token again.";
+    exit();
+}
+
 
 // kirim POST /api/v1/text_feed/text_app_inbox_seen/ optional
 // POST /api/v1/friendships/destroy/xxxx/ unfollow
